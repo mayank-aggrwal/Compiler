@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!-- saved from url=(0068)http://www.csd.uwo.ca/~moreno/CS447/Lectures/Syntax.html/node16.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Structure of a YACC source program</title>
+<meta name="description" content="Structure of a YACC source program">
+<meta name="keywords" content="Syntax">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+
+
+<meta name="Generator" content="jLaTeX2HTML v2002 JA patch-1.4">
+<meta http-equiv="Content-Style-Type" content="text/css">
+
+<link rel="STYLESHEET" href="./Structure of a YACC source program_files/Syntax.css">
+
+<link rel="next" href="http://www.csd.uwo.ca/~moreno/CS447/Lectures/Syntax.html/node17.html">
+<link rel="previous" href="http://www.csd.uwo.ca/~moreno/CS447/Lectures/Syntax.html/node15.html">
+<link rel="up" href="http://www.csd.uwo.ca/~moreno/CS447/Lectures/Syntax.html/node15.html">
+<link rel="next" href="http://www.csd.uwo.ca/~moreno/CS447/Lectures/Syntax.html/node17.html">
+</head>
+
+<body bgcolor="#e0ffff">
+
+<a name="tex2html216" href="http://www.csd.uwo.ca/~moreno/CS447/Lectures/Syntax.html/node17.html">
+<img width="37" height="24" align="BOTTOM" border="0" alt="next" src="./Structure of a YACC source program_files/next.png"></a> 
+<a name="tex2html214" href="http://www.csd.uwo.ca/~moreno/CS447/Lectures/Syntax.html/node15.html">
+<img width="26" height="24" align="BOTTOM" border="0" alt="up" src="./Structure of a YACC source program_files/up.png"></a> 
+<a name="tex2html208" href="http://www.csd.uwo.ca/~moreno/CS447/Lectures/Syntax.html/node15.html">
+<img width="63" height="24" align="BOTTOM" border="0" alt="previous" src="./Structure of a YACC source program_files/prev.png"></a>   <br>
+<b> Next:</b> <a name="tex2html217" href="http://www.csd.uwo.ca/~moreno/CS447/Lectures/Syntax.html/node17.html">A first simple example</a>
+<b>Up:</b> <a name="tex2html215" href="http://www.csd.uwo.ca/~moreno/CS447/Lectures/Syntax.html/node15.html">YACC - Yet Another Compiler</a>
+<b> Previous:</b> <a name="tex2html209" href="http://www.csd.uwo.ca/~moreno/CS447/Lectures/Syntax.html/node15.html">YACC - Yet Another Compiler</a>
+<br> <p>
+
+<!--End of Navigation Panel-->
+
+</p><h2><a name="SECTION00041000000000000000">
+Structure of a YACC source program</a>
+</h2> A YACC source program is structurally similar
+to a LEX one.
+
+<p>
+</p><pre>declarations
+%%
+rules
+%%
+routines
+</pre>
+
+<p>
+
+</p><ul>
+<li>The declaration section may be empty.
+Moreover, if the routines section is omitted, the second 
+%% mark may be omitted also.
+</li>
+<li>Blanks, tabs, and newlines are ignored except that they may not appear in names.
+</li>
+</ul>
+
+<p>
+
+</p><p>
+<br>
+
+</p><p>
+<u>T<small>HE DECLARATIONS SECTION</small></u>  may contain the following items.
+
+</p><ul>
+<li>Declarations of tokens.
+      Yacc requires token names to be declared as such
+      using the keyword <tt>%token</tt>.
+</li>
+<li>Declaration of the start symbol 
+      using the keyword <tt>%start</tt>
+</li>
+<li>C declarations: included files, global variables, types.
+</li>
+<li>C code between <tt>%{</tt> and <tt>%}</tt>.
+</li>
+</ul>
+
+<p>
+
+</p><p>
+<br>
+
+</p><p>
+<u>R<small>ULES SECTION.</small></u>  
+</p><p>
+A rule has the form:
+</p><pre>nonterminal : sentential form
+            | sentential form
+            .................
+            | sentential form
+            ;
+</pre>
+Actions may be associated with rules and are executed when
+the associated sentential form is matched.
+
+<p>
+
+</p><p>
+<br>
+
+</p><p>
+<u>LEX-YACC <small>INTERACTION</small></u>  
+</p><p>
+<tt>yyparse()</tt> calls <tt>yylex()</tt> when it needs a new token.
+</p><div align="CENTER">
+<table cellpadding="3" border="1">
+<tbody><tr valign="BASELINE"><td align="LEFT">LEX</td>
+<td align="LEFT">YACC</td>
+</tr>
+<tr valign="BASELINE"><td align="LEFT"><tt>return(TOKEN)</tt></td>
+<td align="LEFT">%token TOKEN</td>
+</tr>
+<tr valign="BASELINE"><td align="LEFT">&nbsp;</td>
+<td align="LEFT">TOKEN is used in production</td>
+</tr>
+</tbody></table>
+</div>
+The external variable <tt>yylval</tt> 
+
+<ul>
+<li>is used in a LEX source program 
+        to return values of lexemes,
+</li>
+<li><tt>yylval</tt> is assumed to be integer if you take no other action.
+</li>
+<li>Changes related to <tt>yylval</tt> must be made 
+
+<ul>
+<li>in the definitions section of YACC specification 
+
+<ul>
+<li>by adding new types in the following way
+<pre>%union {
+    (type fieldname)
+    (type fieldname)
+    ...............
+}
+</pre>
+</li>
+<li>and defining which token and non-terminals will use these types
+<pre>%token &lt;fieldname&gt; token 
+%type &lt;fieldname&gt; non-terminal
+</pre>
+</li>
+</ul>
+</li>
+<li>in LEX specification by using the fieldnames in the assignment as follows
+<pre>yylval.fieldname = ...........
+</pre>
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+If you need a record type, then add it in the union. Example:
+</p><pre>%union {
+   struct s {
+      double fvalue;
+      int ivalue;
+   } t;
+}
+</pre>
+
+<ul>
+<li>in the LEX specification use the record name and record field in assignments:
+<pre>yylval.t.ivalue = ......
+</pre>
+</li>
+<li>in the YACC rules specification use the record field only in the assignment:
+<pre>$1.ivalue = ......
+</pre> 
+assuming that <tt>$1</tt> has the appropriate type, whatever it denotes.
+</li>
+</ul>
+
+<p>
+</p><hr>
+<a name="tex2html216" href="http://www.csd.uwo.ca/~moreno/CS447/Lectures/Syntax.html/node17.html">
+<img width="37" height="24" align="BOTTOM" border="0" alt="next" src="./Structure of a YACC source program_files/next.png"></a> 
+<a name="tex2html214" href="http://www.csd.uwo.ca/~moreno/CS447/Lectures/Syntax.html/node15.html">
+<img width="26" height="24" align="BOTTOM" border="0" alt="up" src="./Structure of a YACC source program_files/up.png"></a> 
+<a name="tex2html208" href="http://www.csd.uwo.ca/~moreno/CS447/Lectures/Syntax.html/node15.html">
+<img width="63" height="24" align="BOTTOM" border="0" alt="previous" src="./Structure of a YACC source program_files/prev.png"></a>   <br>
+<b> Next:</b> <a name="tex2html217" href="http://www.csd.uwo.ca/~moreno/CS447/Lectures/Syntax.html/node17.html">A first simple example</a>
+<b>Up:</b> <a name="tex2html215" href="http://www.csd.uwo.ca/~moreno/CS447/Lectures/Syntax.html/node15.html">YACC - Yet Another Compiler</a>
+<b> Previous:</b> <a name="tex2html209" href="http://www.csd.uwo.ca/~moreno/CS447/Lectures/Syntax.html/node15.html">YACC - Yet Another Compiler</a>
+
+<!--End of Navigation Panel-->
+<address>
+<i>Marc Moreno Maza <br>
+2004-12-02</i>
+</address>
+
+
+</body></html>

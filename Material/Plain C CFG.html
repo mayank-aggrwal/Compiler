@@ -1,0 +1,259 @@
+
+<!-- saved from url=(0050)http://sandbox.mc.edu/~bennet/cs404/outl/cbnf.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	 <link rel="stylesheet" href="./Plain C CFG_files/twb.css" type="text/css">
+<link rel="stylesheet" href="./Plain C CFG_files/dxtop.css" type="text/css">
+<link rel="stylesheet" href="./Plain C CFG_files/outl.css" type="text/css">
+<link rel="stylesheet" href="./Plain C CFG_files/lat.css" type="text/css">
+<link rel="stylesheet" href="./Plain C CFG_files/matutil.css" type="text/css">
+<link rel="stylesheet" href="./Plain C CFG_files/loc.css" type="text/css">
+
+	 
+	 	 
+	 <title>Plain C CFG</title>
+	 
+	 	 </head>
+	 <body>
+	 <img class="tibar" src="./Plain C CFG_files/bibart.gif" alt="------------------------------------------------------------------------------"><br>
+	 <a href="http://www.mc.edu/"><img src="./Plain C CFG_files/msplash3.gif" class="nb right" alt="MC logo"></a>
+	 <div class="intit">Plain C CFG</div>
+	 <div class="uplnk"><a href="http://sandbox.mc.edu/~bennet/cs404/outl/syn.html"><img src="./Plain C CFG_files/up3.gif" class="nb upimg" alt="[^]"></a>
+		<a href="http://sandbox.mc.edu/~bennet/cs404/outl/syn.html">Syntax</a></div>
+	 <img class="tibar tibarbot" src="./Plain C CFG_files/bibar.gif" alt="------------------------------------------------------------------------------"><div class="dxtop">
+<span class="dxname">[<a class="dxtop " href="http://sandbox.mc.edu/~bennet/cs404/outl/over.html">Ch. 1: Overview and History</a>]</span>
+		 <span class="dxname">[<a class="dxtop  dxhere" href="http://sandbox.mc.edu/~bennet/cs404/outl/syn.html">Syntax</a>]</span>
+		 <span class="dxname">[<a class="dxtop " href="http://sandbox.mc.edu/~bennet/cs404/outl/namscope.html">Names and Scope</a>]</span>
+		 <span class="dxname">[<a class="dxtop " href="http://sandbox.mc.edu/~bennet/cs404/outl/types.html">Types and Type Systems</a>]</span>
+		 <span class="dxname">[<a class="dxtop " href="http://sandbox.mc.edu/~bennet/cs404/outl/sem.html">Semantics</a>]</span>
+		 <span class="dxname">[<a class="dxtop " href="http://sandbox.mc.edu/~bennet/cs404/outl/func.html">Functions</a>]</span>
+		 <span class="dxname">[<a class="dxtop " href="http://sandbox.mc.edu/~bennet/cs404/outl/memory.html">Memory Management</a>]</span>
+		 <span class="dxname">[<a class="dxtop " href="http://sandbox.mc.edu/~bennet/cs404/outl/imper.html">Imperitive Programs and Functional Abstraction</a>]</span>
+		 <span class="dxname">[<a class="dxtop " href="http://sandbox.mc.edu/~bennet/cs404/outl/obj.html">Modular and Class Abstraction</a>]</span>
+		 <span class="dxname">[<a class="dxtop " href="http://sandbox.mc.edu/~bennet/cs404/outl/funcal.html">Functional Programming</a>]</span>
+		 <span class="dxname">[<a class="dxtop " href="http://sandbox.mc.edu/~bennet/cs404/outl/log.html">Logic Programming</a>]</span>
+		 </div><div class="dxtop">
+<span class="dxname">[<a class="dxtop " href="http://sandbox.mc.edu/~bennet/cs404/outl/clitecfg.html">ECFG for Tucker and Noonan's Clite Language</a>]</span>
+		 <span class="dxname">[<a class="dxtop  dxhere" href="http://sandbox.mc.edu/~bennet/cs404/outl/cbnf.html">Plain C CFG</a>]</span>
+		 <span class="dxname">[<a class="dxtop " href="http://sandbox.mc.edu/~bennet/cs404/outl/cliteabs.html">Abstract Syntax for for Tucker and Noonan's Clite Language</a>]</span>
+		 <span class="dxname">[<a class="dxtop " href="http://sandbox.mc.edu/~bennet/cs404/outl/cander.html">Derivation Problem</a>]</span>
+		 <span class="dxname">[<a class="dxtop " href="http://sandbox.mc.edu/~bennet/cs404/outl/reprob.html">Regular Expression Problems</a>]</span>
+		 </div>
+
+
+
+
+This a grammar for plain C reformatted from 
+<a href="http://www.cs.man.ac.uk/~pjj/bnf/c_syntax.bnf">this
+Yacc file</a>.  Literal tokens are in <b><tt>bold code</tt></b> font, 
+other tokens are <b><i>bold italic</i></b>.
+
+<table class="prod">
+<tbody><tr><td><i>TranslationUnit</i></td><td>→</td><td><i>ExternalDecl</i></td></tr>
+<tr><td></td><td>|</td><td><i>TranslationUnit</i> <i>ExternalDecl</i></td></tr>
+<tr><td><i>ExternalDecl</i></td><td>→</td><td><i>FunctionDefinition</i></td></tr>
+<tr><td></td><td>|</td><td><i>Decl</i></td></tr>
+<tr><td><i>FunctionDefinition</i></td><td>→</td><td><i>DeclSpecs</i> <i>Declarator</i> <i>DeclList</i> <i>CompoundStat</i></td></tr>
+<tr><td></td><td>|</td><td><i>Declarator</i> <i>DeclList</i> <i>CompoundStat</i></td></tr>
+<tr><td></td><td>|</td><td><i>DeclSpecs</i> <i>Declarator</i> <i>CompoundStat</i></td></tr>
+<tr><td></td><td>|</td><td><i>Declarator</i> <i>CompoundStat</i></td></tr>
+<tr><td><i>Decl</i></td><td>→</td><td><i>DeclSpecs</i> <i>InitDeclaratorList</i> <b><tt>;</tt></b></td></tr>
+<tr><td></td><td>|</td><td><i>DeclSpecs</i> <b><tt>;</tt></b></td></tr>
+<tr><td><i>DeclList</i></td><td>→</td><td><i>Decl</i></td></tr>
+<tr><td></td><td>|</td><td><i>DeclList</i> <i>Decl</i></td></tr>
+<tr><td><i>DeclSpecs</i></td><td>→</td><td><i>StorageClassSpec</i> <i>DeclSpecs</i></td></tr>
+<tr><td></td><td>|</td><td><i>StorageClassSpec</i></td></tr>
+<tr><td></td><td>|</td><td><i>TypeSpec</i> <i>DeclSpecs</i></td></tr>
+<tr><td></td><td>|</td><td><i>TypeSpec</i></td></tr>
+<tr><td></td><td>|</td><td><i>TypeQualifier</i> <i>DeclSpecs</i></td></tr>
+<tr><td></td><td>|</td><td><i>TypeQualifier</i></td></tr>
+<tr><td><i>StorageClassSpec</i></td><td>→</td><td><b><tt>auto</tt></b> | <b><tt>register</tt></b> | <b><tt>static</tt></b> | <b><tt>extern</tt></b> | <b><tt>typedef</tt></b></td></tr>
+<tr><td><i>TypeSpec</i></td><td>→</td><td><b><tt>void</tt></b> | <b><tt>char</tt></b> | <b><tt>short</tt></b> | <b><tt>int</tt></b> | <b><tt>long</tt></b> | <b><tt>float</tt></b> 
+	| <b><tt>double</tt></b> | <b><tt>signed</tt></b> | <b><tt>unsigned</tt></b></td></tr>
+<tr><td></td><td>|</td><td><i>StructOrUnionSpec</i> | <i>EnumSpec</i> | <i>TypedefName</i></td></tr>
+<tr><td><i>TypeQualifier</i></td><td>→</td><td><b><tt>const</tt></b> | <b><tt>volatile</tt></b></td></tr>
+<tr><td><i>StructOrUnionSpec</i></td><td>→</td><td><i>StructOrUnion</i> <b><i>Id</i></b> <b><tt>{</tt></b> <i>StructDeclList</i> <b><tt>}</tt></b></td></tr>
+<tr><td></td><td>|</td><td><i>StructOrUnion</i> <b><tt>{</tt></b> <i>StructDeclList</i> <b><tt>}</tt></b></td></tr>
+<tr><td></td><td>|</td><td><i>StructOrUnion</i> <b><i>Id</i></b></td></tr>
+<tr><td><i>StructOrUnion</i></td><td>→</td><td><b><tt>struct</tt></b> | <b><tt>union</tt></b></td></tr>
+<tr><td><i>StructDeclList</i></td><td>→</td><td><i>StructDecl</i></td></tr>
+<tr><td></td><td>|</td><td><i>StructDeclList</i> <i>StructDecl</i></td></tr>
+<tr><td><i>InitDeclaratorList</i></td><td>→</td><td><i>InitDeclarator</i></td></tr>
+<tr><td></td><td>|</td><td><i>InitDeclaratorList</i> <b><tt>,</tt></b> <i>InitDeclarator</i></td></tr>
+<tr><td><i>InitDeclarator</i></td><td>→</td><td><i>Declarator</i></td></tr>
+<tr><td></td><td>|</td><td><i>Declarator</i> <b><tt>=</tt></b> <i>Initializer</i></td></tr>
+<tr><td><i>StructDecl</i></td><td>→</td><td><i>SpecQualifierList</i> <i>StructDeclaratorList</i> <b><tt>;</tt></b></td></tr>
+<tr><td><i>SpecQualifierList</i></td><td>→</td><td><i>TypeSpec</i> <i>SpecQualifierList</i></td></tr>
+<tr><td></td><td>|</td><td><i>TypeSpec</i></td></tr>
+<tr><td></td><td>|</td><td><i>TypeQualifier</i> <i>SpecQualifierList</i></td></tr>
+<tr><td></td><td>|</td><td><i>TypeQualifier</i></td></tr>
+<tr><td><i>StructDeclaratorList</i></td><td>→</td><td><i>StructDeclarator</i></td></tr>
+<tr><td></td><td>|</td><td><i>StructDeclaratorList</i> <b><tt>,</tt></b> <i>StructDeclarator</i></td></tr>
+<tr><td><i>StructDeclarator</i></td><td>→</td><td><i>Declarator</i></td></tr>
+<tr><td></td><td>|</td><td><i>Declarator</i> <b><tt>:</tt></b> <i>ConstExp</i></td></tr>
+<tr><td></td><td>|</td><td><b><tt>:</tt></b> <i>ConstExp</i></td></tr>
+<tr><td><i>EnumSpec</i></td><td>→</td><td><b><tt>enum</tt></b> <b><i>Id</i></b> <b><tt>{</tt></b> <i>EnumeratorList</i> <b><tt>}</tt></b></td></tr>
+<tr><td></td><td>|</td><td><b><tt>enum</tt></b> <b><tt>{</tt></b> <i>EnumeratorList</i> <b><tt>}</tt></b></td></tr>
+<tr><td></td><td>|</td><td><b><tt>enum</tt></b> <b><i>Id</i></b></td></tr>
+<tr><td><i>EnumeratorList</i></td><td>→</td><td><i>Enumerator</i></td></tr>
+<tr><td></td><td>|</td><td><i>EnumeratorList</i> <b><tt>,</tt></b> <i>Enumerator</i></td></tr>
+<tr><td><i>Enumerator</i></td><td>→</td><td><b><i>Id</i></b></td></tr>
+<tr><td></td><td>|</td><td><b><i>Id</i></b> <b><tt>=</tt></b> <i>ConstExp</i></td></tr>
+<tr><td><i>Declarator</i></td><td>→</td><td><i>Pointer</i> <i>DirectDeclarator</i></td></tr>
+<tr><td></td><td>|</td><td><i>DirectDeclarator</i></td></tr>
+<tr><td><i>DirectDeclarator</i></td><td>→</td><td><b><i>Id</i></b></td></tr>
+<tr><td></td><td>|</td><td><b><tt>(</tt></b> <i>Declarator</i> <b><tt>)</tt></b></td></tr>
+<tr><td></td><td>|</td><td><i>DirectDeclarator</i> <b><tt>[</tt></b> <i>ConstExp</i> <b><tt>]</tt></b></td></tr>
+<tr><td></td><td>|</td><td><i>DirectDeclarator</i> <b><tt>[</tt></b> <b><tt>]</tt></b></td></tr>
+<tr><td></td><td>|</td><td><i>DirectDeclarator</i> <b><tt>(</tt></b> <i>ParamTypeList</i> <b><tt>)</tt></b></td></tr>
+<tr><td></td><td>|</td><td><i>DirectDeclarator</i> <b><tt>(</tt></b> <i>IdList</i> <b><tt>)</tt></b></td></tr>
+<tr><td></td><td>|</td><td><i>DirectDeclarator</i> <b><tt>(</tt></b> <b><tt>)</tt></b></td></tr>
+<tr><td><i>Pointer</i></td><td>→</td><td><b><tt>*</tt></b> <i>TypeQualifierList</i></td></tr>
+<tr><td></td><td>|</td><td><b><tt>*</tt></b></td></tr>
+<tr><td></td><td>|</td><td><b><tt>*</tt></b> <i>TypeQualifierList</i> <i>Pointer</i></td></tr>
+<tr><td></td><td>|</td><td><b><tt>*</tt></b> <i>Pointer</i></td></tr>
+<tr><td><i>TypeQualifierList</i></td><td>→</td><td><i>TypeQualifier</i></td></tr>
+<tr><td></td><td>|</td><td><i>TypeQualifierList</i> <i>TypeQualifier</i></td></tr>
+<tr><td><i>ParamTypeList</i></td><td>→</td><td><i>ParamList</i></td></tr>
+<tr><td></td><td>|</td><td><i>ParamList</i> <b><tt>,</tt></b> <b><tt>.</tt></b><b><tt>.</tt></b><b><tt>.</tt></b></td></tr>
+<tr><td><i>ParamList</i></td><td>→</td><td><i>ParamDecl</i></td></tr>
+<tr><td></td><td>|</td><td><i>ParamList</i> <b><tt>,</tt></b> <i>ParamDecl</i></td></tr>
+<tr><td><i>ParamDecl</i></td><td>→</td><td><i>DeclSpecs</i> <i>Declarator</i></td></tr>
+<tr><td></td><td>|</td><td><i>DeclSpecs</i> <i>AbstractDeclarator</i></td></tr>
+<tr><td></td><td>|</td><td><i>DeclSpecs</i></td></tr>
+<tr><td><i>IdList</i></td><td>→</td><td><b><i>Id</i></b></td></tr>
+<tr><td></td><td>|</td><td><i>IdList</i> <b><tt>,</tt></b> <b><i>Id</i></b></td></tr>
+<tr><td><i>Initializer</i></td><td>→</td><td><i>AssignmentExp</i></td></tr>
+<tr><td></td><td>|</td><td><b><tt>{</tt></b> <i>InitializerList</i> <b><tt>}</tt></b></td></tr>
+<tr><td></td><td>|</td><td><b><tt>{</tt></b> <i>InitializerList</i> <b><tt>,</tt></b> <b><tt>}</tt></b></td></tr>
+<tr><td><i>InitializerList</i></td><td>→</td><td><i>Initializer</i></td></tr>
+<tr><td></td><td>|</td><td><i>InitializerList</i> <b><tt>,</tt></b> <i>Initializer</i></td></tr>
+<tr><td><i>TypeName</i></td><td>→</td><td><i>SpecQualifierList</i> <i>AbstractDeclarator</i></td></tr>
+<tr><td></td><td>|</td><td><i>SpecQualifierList</i></td></tr>
+<tr><td><i>AbstractDeclarator</i></td><td>→</td><td><i>Pointer</i></td></tr>
+<tr><td></td><td>|</td><td><i>Pointer</i> <i>DirectAbstractDeclarator</i></td></tr>
+<tr><td></td><td>|</td><td><i>DirectAbstractDeclarator</i></td></tr>
+<tr><td><i>DirectAbstractDeclarator</i></td><td>→</td><td><b><tt>(</tt></b> <i>AbstractDeclarator</i> <b><tt>)</tt></b></td></tr>
+<tr><td></td><td>|</td><td><i>DirectAbstractDeclarator</i> <b><tt>[</tt></b> <i>ConstExp</i> <b><tt>]</tt></b></td></tr>
+<tr><td></td><td>|</td><td><b><tt>[</tt></b> <i>ConstExp</i> <b><tt>]</tt></b></td></tr>
+<tr><td></td><td>|</td><td><i>DirectAbstractDeclarator</i> <b><tt>[</tt></b> <b><tt>]</tt></b></td></tr>
+<tr><td></td><td>|</td><td><b><tt>[</tt></b> <b><tt>]</tt></b></td></tr>
+<tr><td></td><td>|</td><td><i>DirectAbstractDeclarator</i> <b><tt>(</tt></b> <i>ParamTypeList</i> <b><tt>)</tt></b></td></tr>
+<tr><td></td><td>|</td><td><b><tt>(</tt></b> <i>ParamTypeList</i> <b><tt>)</tt></b></td></tr>
+<tr><td></td><td>|</td><td><i>DirectAbstractDeclarator</i> <b><tt>(</tt></b> <b><tt>)</tt></b></td></tr>
+<tr><td></td><td>|</td><td><b><tt>(</tt></b> <b><tt>)</tt></b></td></tr>
+<tr><td><i>TypedefName</i></td><td>→</td><td><b><i>Id</i></b></td></tr>
+<tr><td><i>Stat</i></td><td>→</td><td><i>LabeledStat</i> | <i>ExpStat</i> | <i>CompoundStat</i> | <i>SelectionStat</i> |
+	<i>IterationStat</i> | <i>JumpStat</i></td></tr>
+<tr><td><i>LabeledStat</i></td><td>→</td><td><b><i>Id</i></b> <b><tt>:</tt></b> <i>Stat</i></td></tr>
+<tr><td></td><td>|</td><td><b><tt>case</tt></b> <i>ConstExp</i> <b><tt>:</tt></b> <i>Stat</i></td></tr>
+<tr><td></td><td>|</td><td><b><tt>default</tt></b> <b><tt>:</tt></b> <i>Stat</i></td></tr>
+<tr><td><i>ExpStat</i></td><td>→</td><td><i>Exp</i> <b><tt>;</tt></b></td></tr>
+<tr><td></td><td>|</td><td><b><tt>;</tt></b></td></tr>
+<tr><td><i>CompoundStat</i></td><td>→</td><td><b><tt>{</tt></b> <i>DeclList</i> <i>StatList</i> <b><tt>}</tt></b></td></tr>
+<tr><td></td><td>|</td><td><b><tt>{</tt></b> <i>StatList</i> <b><tt>}</tt></b></td></tr>
+<tr><td></td><td>|</td><td><b><tt>{</tt></b> <i>DeclList</i> <b><tt>}</tt></b></td></tr>
+<tr><td></td><td>|</td><td><b><tt>{</tt></b> <b><tt>}</tt></b></td></tr>
+<tr><td><i>StatList</i></td><td>→</td><td><i>Stat</i></td></tr>
+<tr><td></td><td>|</td><td><i>StatList</i> <i>Stat</i></td></tr>
+<tr><td><i>SelectionStat</i></td><td>→</td><td><b><tt>if</tt></b> <b><tt>(</tt></b> <i>Exp</i> <b><tt>)</tt></b> <i>Stat</i></td></tr>
+<tr><td></td><td>|</td><td><b><tt>if</tt></b> <b><tt>(</tt></b> <i>Exp</i> <b><tt>)</tt></b> <i>Stat</i> <b><tt>else</tt></b> <i>Stat</i></td></tr>
+<tr><td></td><td>|</td><td><b><tt>switch</tt></b> <b><tt>(</tt></b> <i>Exp</i> <b><tt>)</tt></b> <i>Stat</i></td></tr>
+<tr><td><i>IterationStat</i></td><td>→</td><td><b><tt>while</tt></b> <b><tt>(</tt></b> <i>Exp</i> <b><tt>)</tt></b> <i>Stat</i></td></tr>
+<tr><td></td><td>|</td><td><b><tt>do</tt></b> <i>Stat</i> <b><tt>while</tt></b> <b><tt>(</tt></b> <i>Exp</i> <b><tt>)</tt></b> <b><tt>;</tt></b></td></tr>
+<tr><td></td><td>|</td><td><b><tt>for</tt></b> <b><tt>(</tt></b> <i>Exp</i> <b><tt>;</tt></b> <i>Exp</i> <b><tt>;</tt></b> <i>Exp</i> <b><tt>)</tt></b> <i>Stat</i></td></tr>
+<tr><td></td><td>|</td><td><b><tt>for</tt></b> <b><tt>(</tt></b> <i>Exp</i> <b><tt>;</tt></b> <i>Exp</i> <b><tt>;</tt></b> <b><tt>)</tt></b> <i>Stat</i></td></tr>
+<tr><td></td><td>|</td><td><b><tt>for</tt></b> <b><tt>(</tt></b> <i>Exp</i> <b><tt>;</tt></b> <b><tt>;</tt></b> <i>Exp</i> <b><tt>)</tt></b> <i>Stat</i></td></tr>
+<tr><td></td><td>|</td><td><b><tt>for</tt></b> <b><tt>(</tt></b> <i>Exp</i> <b><tt>;</tt></b> <b><tt>;</tt></b> <b><tt>)</tt></b> <i>Stat</i></td></tr>
+<tr><td></td><td>|</td><td><b><tt>for</tt></b> <b><tt>(</tt></b> <b><tt>;</tt></b> <i>Exp</i> <b><tt>;</tt></b> <i>Exp</i> <b><tt>)</tt></b> <i>Stat</i></td></tr>
+<tr><td></td><td>|</td><td><b><tt>for</tt></b> <b><tt>(</tt></b> <b><tt>;</tt></b> <i>Exp</i> <b><tt>;</tt></b> <b><tt>)</tt></b> <i>Stat</i></td></tr>
+<tr><td></td><td>|</td><td><b><tt>for</tt></b> <b><tt>(</tt></b> <b><tt>;</tt></b> <b><tt>;</tt></b> <i>Exp</i> <b><tt>)</tt></b> <i>Stat</i></td></tr>
+<tr><td></td><td>|</td><td><b><tt>for</tt></b> <b><tt>(</tt></b> <b><tt>;</tt></b> <b><tt>;</tt></b> <b><tt>)</tt></b> <i>Stat</i></td></tr>
+<tr><td><i>JumpStat</i></td><td>→</td><td><i>JumpSpec</i> <b><tt>;</tt></b></td></tr>
+<tr><td><i>JumpSpec</i></td><td>→</td><td><b><tt>goto</tt></b> <b><i>Id</i></b> | <b><tt>continue</tt></b> | <b><tt>break</tt></b> | <b><tt>return</tt></b> <i>Exp</i> | <b><tt>return</tt></b></td></tr>
+<tr><td><i>Exp</i></td><td>→</td><td><i>AssignmentExp</i></td></tr>
+<tr><td></td><td>|</td><td><i>Exp</i> <b><tt>,</tt></b> <i>AssignmentExp</i></td></tr>
+<tr><td><i>AssignmentExp</i></td><td>→</td><td><i>ConditionalExp</i></td></tr>
+<tr><td></td><td>|</td><td><i>UnaryExp</i> <i>AssignmentOperator</i> <i>AssignmentExp</i></td></tr>
+<tr><td><i>AssignmentOperator</i></td><td>→</td><td><b><tt>=</tt></b> | <b><tt>*</tt></b><b><tt>=</tt></b> | <b><tt>/</tt></b><b><tt>=</tt></b> | <b><tt>%</tt></b><b><tt>=</tt></b> | <b><tt>+</tt></b><b><tt>=</tt></b> | <b><tt>-</tt></b><b><tt>=</tt></b> | <b><tt>&lt;</tt></b><b><tt>&lt;</tt></b><b><tt>=</tt></b> |
+	<b><tt>&gt;</tt></b><b><tt>&gt;</tt></b><b><tt>=</tt></b> | <b><tt>&amp;</tt></b><b><tt>=</tt></b> | <b><tt>^</tt></b><b><tt>=</tt></b> | <b><tt>|</tt></b><b><tt>=</tt></b></td></tr>
+<tr><td><i>ConditionalExp</i></td><td>→</td><td><i>LogicalOrExp</i></td></tr>
+<tr><td></td><td>|</td><td><i>LogicalOrExp</i> <b><tt>?</tt></b> <i>Exp</i> <b><tt>:</tt></b> <i>ConditionalExp</i></td></tr>
+<tr><td><i>ConstExp</i></td><td>→</td><td><i>ConditionalExp</i></td></tr>
+<tr><td><i>LogicalOrExp</i></td><td>→</td><td><i>LogicalAndExp</i></td></tr>
+<tr><td></td><td>|</td><td><i>LogicalOrExp</i> <b><tt>|</tt></b><b><tt>|</tt></b> <i>LogicalAndExp</i></td></tr>
+<tr><td><i>LogicalAndExp</i></td><td>→</td><td><i>InclusiveOrExp</i></td></tr>
+<tr><td></td><td>|</td><td><i>LogicalAndExp</i> <b><tt>&amp;</tt></b><b><tt>&amp;</tt></b> <i>InclusiveOrExp</i></td></tr>
+<tr><td><i>InclusiveOrExp</i></td><td>→</td><td><i>ExclusiveOrExp</i></td></tr>
+<tr><td></td><td>|</td><td><i>InclusiveOrExp</i> <b><tt>|</tt></b> <i>ExclusiveOrExp</i></td></tr>
+<tr><td><i>ExclusiveOrExp</i></td><td>→</td><td><i>AndExp</i></td></tr>
+<tr><td></td><td>|</td><td><i>ExclusiveOrExp</i> <b><tt>^</tt></b> <i>AndExp</i></td></tr>
+<tr><td><i>AndExp</i></td><td>→</td><td><i>EqualityExp</i></td></tr>
+<tr><td></td><td>|</td><td><i>AndExp</i> <b><tt>&amp;</tt></b> <i>EqualityExp</i></td></tr>
+<tr><td><i>EqualityExp</i></td><td>→</td><td><i>RelationalExp</i></td></tr>
+<tr><td></td><td>|</td><td><i>EqualityExp</i> <b><tt>=</tt></b><b><tt>=</tt></b> <i>RelationalExp</i></td></tr>
+<tr><td></td><td>|</td><td><i>EqualityExp</i> <b><tt>!</tt></b><b><tt>=</tt></b> <i>RelationalExp</i></td></tr>
+<tr><td><i>RelationalExp</i></td><td>→</td><td><i>ShiftExpression</i></td></tr>
+<tr><td></td><td>|</td><td><i>RelationalExp</i> <b><tt>&lt;</tt></b> <i>ShiftExpression</i></td></tr>
+<tr><td></td><td>|</td><td><i>RelationalExp</i> <b><tt>&gt;</tt></b> <i>ShiftExpression</i></td></tr>
+<tr><td></td><td>|</td><td><i>RelationalExp</i> <b><tt>&lt;</tt></b><b><tt>=</tt></b> <i>ShiftExpression</i></td></tr>
+<tr><td></td><td>|</td><td><i>RelationalExp</i> <b><tt>&gt;</tt></b><b><tt>=</tt></b> <i>ShiftExpression</i></td></tr>
+<tr><td><i>ShiftExpression</i></td><td>→</td><td><i>AdditiveExp</i></td></tr>
+<tr><td></td><td>|</td><td><i>ShiftExpression</i> <b><tt>&lt;</tt></b><b><tt>&lt;</tt></b> <i>AdditiveExp</i></td></tr>
+<tr><td></td><td>|</td><td><i>ShiftExpression</i> <b><tt>&gt;</tt></b><b><tt>&gt;</tt></b> <i>AdditiveExp</i></td></tr>
+<tr><td><i>AdditiveExp</i></td><td>→</td><td><i>MultExp</i></td></tr>
+<tr><td></td><td>|</td><td><i>AdditiveExp</i> <b><tt>+</tt></b> <i>MultExp</i></td></tr>
+<tr><td></td><td>|</td><td><i>AdditiveExp</i> <b><tt>-</tt></b> <i>MultExp</i></td></tr>
+<tr><td><i>MultExp</i></td><td>→</td><td><i>CastExp</i></td></tr>
+<tr><td></td><td>|</td><td><i>MultExp</i> <b><tt>*</tt></b> <i>CastExp</i></td></tr>
+<tr><td></td><td>|</td><td><i>MultExp</i> <b><tt>/</tt></b> <i>CastExp</i></td></tr>
+<tr><td></td><td>|</td><td><i>MultExp</i> <b><tt>%</tt></b> <i>CastExp</i></td></tr>
+<tr><td><i>CastExp</i></td><td>→</td><td><i>UnaryExp</i></td></tr>
+<tr><td></td><td>|</td><td><b><tt>(</tt></b> <i>TypeName</i> <b><tt>)</tt></b> <i>CastExp</i></td></tr>
+<tr><td><i>UnaryExp</i></td><td>→</td><td><i>PostfixExp</i></td></tr>
+<tr><td></td><td>|</td><td><b><tt>+</tt></b><b><tt>+</tt></b> <i>UnaryExp</i></td></tr>
+<tr><td></td><td>|</td><td><b><tt>-</tt></b><b><tt>-</tt></b> <i>UnaryExp</i></td></tr>
+<tr><td></td><td>|</td><td><i>UnaryOperator</i> <i>CastExp</i></td></tr>
+<tr><td></td><td>|</td><td><b><tt>sizeof</tt></b> <i>UnaryExp</i></td></tr>
+<tr><td></td><td>|</td><td><b><tt>sizeof</tt></b> <b><tt>(</tt></b> <i>TypeName</i> <b><tt>)</tt></b></td></tr>
+<tr><td><i>UnaryOperator</i></td><td>→</td><td><b><tt>&amp;</tt></b> | <b><tt>*</tt></b> | <b><tt>+</tt></b> | <b><tt>-</tt></b> | <b><tt>~</tt></b> | <b><tt>!</tt></b></td></tr>
+<tr><td><i>PostfixExp</i></td><td>→</td><td><i>PrimaryExp</i></td></tr>
+<tr><td></td><td>|</td><td><i>PostfixExp</i> <b><tt>[</tt></b> <i>Exp</i> <b><tt>]</tt></b></td></tr>
+<tr><td></td><td>|</td><td><i>PostfixExp</i> <b><tt>(</tt></b> <i>ArgumentExpList</i> <b><tt>)</tt></b></td></tr>
+<tr><td></td><td>|</td><td><i>PostfixExp</i> <b><tt>(</tt></b> <b><tt>)</tt></b></td></tr>
+<tr><td></td><td>|</td><td><i>PostfixExp</i> <b><tt>.</tt></b> <b><i>Id</i></b></td></tr>
+<tr><td></td><td>|</td><td><i>PostfixExp</i> <b><tt>-</tt></b><b><tt>&gt;</tt></b> <b><i>Id</i></b></td></tr>
+<tr><td></td><td>|</td><td><i>PostfixExp</i> <b><tt>+</tt></b><b><tt>+</tt></b></td></tr>
+<tr><td></td><td>|</td><td><i>PostfixExp</i> <b><tt>-</tt></b><b><tt>-</tt></b></td></tr>
+<tr><td><i>PrimaryExp</i></td><td>→</td><td><b><i>Id</i></b> | <b><i>IntConst</i></b> | <b><i>FloatConst</i></b> |
+		<b><i>EnumerationConst</i></b> | <b><i>StringConst</i></b> |
+		<b><tt>(</tt></b> <i>Exp</i> <b><tt>)</tt></b></td></tr>
+<tr><td><i>ArgumentExpList</i></td><td>→</td><td><i>AssignmentExp</i></td></tr>
+<tr><td></td><td>|</td><td><i>ArgumentExpList</i> <b><tt>,</tt></b> <i>AssignmentExp</i></td></tr>
+
+
+</tbody></table>
+
+<h2 class="sec">Nothing Helps</h2>
+In the above grammar, the replacement is always a non-empty string.
+Right sides may be empty, usually written as ε.  A rule can
+then take the form <i>Whatever</i> → ε, meaning that
+the non-terminal <i>Whatever</i> is allowed to just disappear during a 
+derivation.  This can simplify certain things.  For instance, 
+the C <tt>for</tt> statement may omit any of the initialization, 
+test, or increment parts of the header.  In the above, this is
+represented by giving eight versions of the <tt>for</tt> header, with each
+combination of presence or omission.  But using an epsilon rule, we
+can write this more concisely.
+
+<table class="prod">
+<tbody><tr><td><i>IterationStat</i></td><td>→</td><td><b><tt>while</tt></b> <b><tt>(</tt></b> <i>Exp</i> <b><tt>)</tt></b> <i>Stat</i></td></tr>
+<tr><td></td><td>|</td><td><b><tt>do</tt></b> <i>Stat</i> <b><tt>while</tt></b> <b><tt>(</tt></b> <i>Exp</i> <b><tt>)</tt></b> <b><tt>;</tt></b></td></tr>
+<tr><td></td><td>|</td><td><b><tt>for</tt></b> <b><tt>(</tt></b> <i>OptExp</i> <b><tt>;</tt></b> <i>OptExp</i> <b><tt>;</tt></b> <i>OptExp</i> <b><tt>)</tt></b> <i>Stat</i></td></tr>
+<tr><td><i>OptExp</i></td><td>→</td><td><i>Exp</i> | ε</td></tr>
+</tbody></table>
+Epsilon may help in other places as well, but this seems the most
+dramatic.
+
+
+
+</body></html>

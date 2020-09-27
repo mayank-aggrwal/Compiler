@@ -1,0 +1,10 @@
+div.body img { border: 0pt; } 
+div.rt { float: right; text-align: right; }
+div.rt img { padding-bottom: 20pt; }
+.popper { cursor: pointer; }
+span.fakelink { color: blue; text-decoration: underline; cursor: pointer; }
+table.prod { margin-left: 15pt; }
+table.prod td { text-align: right; padding-right: 4pt; vertical-align: top; }
+table.prod td + td { text-align: center; padding: 0pt; }
+table.prod td + td + td { text-align: left; padding-left: 4pt; }
+div.taller { padding-top: 10pt; padding-bottom: 10pt; }

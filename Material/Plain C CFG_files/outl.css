@@ -1,0 +1,24 @@
+ol.outl_1 {
+	list-style-type: upper-roman;
+}
+ol.outl_1 li {
+	margin-top: 10pt;
+}
+ol.outl_2 {
+	list-style-type: upper-alpha;
+}
+ol.outl_2 li {
+	margin-top: 2pt;
+}
+ol.outl_3 {
+	list-style-type: decimal;
+}
+ol.outl_4 {
+	list-style-type: lower-alpha;
+}
+ol.outl_5 {
+	list-style-type: lower-roman;
+}
+ol.outl_6 {
+	list-style-type: lower-greek;
+}
